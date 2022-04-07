@@ -5,6 +5,7 @@ import androidx.room.*
 @Dao
 interface SekolahDao {
     @Insert fun insertSekolah(sekolah: Sekolah) : Long
+
     @Query("SELECT * FROM Sekolah")
     fun getAllSekolah() : List<Sekolah>
 

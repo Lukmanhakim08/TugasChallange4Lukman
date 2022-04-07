@@ -17,7 +17,6 @@ import kotlinx.coroutines.launch
 
 @DelicateCoroutinesApi
 class DashboardFragment : Fragment() {
-
     private var dbSekolah : SekolahDatabase? = null
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -34,6 +33,13 @@ class DashboardFragment : Fragment() {
         val sharedPreferences = requireContext().getSharedPreferences("DATAUSER", Context.MODE_PRIVATE)
         val username = sharedPreferences.getString("USERNAME", "")
         text_username.text = "Welcome, $username"
+
+        fab_add.setOnClickListener {
+            InputDialogFragment().show(childFragmentManager, "InputDialogFragment")
+        }
+
+        dbSekolah = SekolahDatabase.getInstance(requireContext())
+        getDataSekolah()
 
         text_logout.setOnClickListener {
             AlertDialog.Builder(requireContext())
@@ -54,11 +60,6 @@ class DashboardFragment : Fragment() {
                 }.show()
         }
 
-        fab_add.setOnClickListener {
-            InputDialogFragment().show(childFragmentManager, "InputDialogFragment")
-        }
-        dbSekolah = SekolahDatabase.getInstance(requireContext())
-        getDataSekolah()
     }
 
     // Methode untuk memanggil data dari SekolahDatabase

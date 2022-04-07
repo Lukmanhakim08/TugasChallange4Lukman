@@ -10,7 +10,6 @@ import lu.andlim.tugas4challangelukman.Datauser.UserDao
 @Database(entities = [Sekolah::class], version = 1)
 abstract class SekolahDatabase : RoomDatabase(){
     abstract fun sekolahDao() : SekolahDao
-    abstract fun userDao() : UserDao
 
     companion object{
         private var INSTANCE : SekolahDatabase? = null

@@ -1,6 +1,5 @@
 package lu.andlim.tugas4challangelukman
 
-import android.content.Context
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -8,15 +7,17 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.navigation.Navigation
-import kotlinx.android.synthetic.main.fragment_input_dialog.*
 import kotlinx.android.synthetic.main.fragment_register.*
+import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.async
 import lu.andlim.tugas4challangelukman.Datauser.DataUser
+import lu.andlim.tugas4challangelukman.Datauser.UserDatabase
 
+@DelicateCoroutinesApi
 class RegisterFragment : Fragment() {
 
-    private var dbuser : SekolahDatabase? = null
+    private var dbuser : UserDatabase? = null
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -27,60 +28,47 @@ class RegisterFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        dbuser = SekolahDatabase.getInstance(requireContext())
         btn_register.setOnClickListener {
-            if (edt_nomor.text.isNotEmpty() &&
-                    edt_username.text.isNotEmpty() &&
-                    edt_email.text.isNotEmpty() &&
-                    edt_email.text.isNotEmpty() &&
-                    edt_password.text.isNotEmpty() &&
-                    edt_konfirmasi.text.isNotEmpty()){
-                if (edt_password.text.toString() != edt_konfirmasi.text.toString()){
-                    Toast.makeText(requireContext(), "Password dan passsword harus sama", Toast.LENGTH_SHORT).show()
+            if(edt_nomor.text.isNotEmpty() &&
+                edt_username.text.isNotEmpty() &&
+                edt_username.text.isNotEmpty() &&
+                edt_password.text.isNotEmpty() &&
+                edt_konfirmasi.text.isNotEmpty()){
+
+                //check the similarity between the password field and confirm password
+                if(edt_password.text.toString() != edt_konfirmasi.text.toString()){
+                    Toast.makeText(requireContext(), "Password dan konfirmasi password harus sama", Toast.LENGTH_SHORT).show()
                 }else{
-                    inputUserData()
+                    //if similar, then input user data to user database
+//                    inputUserData()
+                    saveData()
                     Navigation.findNavController(view).navigate(R.id.action_to_login)
-                    Toast.makeText(requireContext(), "Register Success", Toast.LENGTH_SHORT).show()
                 }
-            } else{
+            }else{
                 Toast.makeText(requireContext(), "Semua data belum terisi", Toast.LENGTH_SHORT).show()
             }
         }
     }
 
-//    private fun saveData(){
-//        GlobalScope.async {
-//            val datnomor = edt_nomor.text.toString()
-//            val datausername = edt_username.text.toString()
-//            val dataEmail = edt_email.text.toString()
-//            val datapassword = edt_password.text.toString()
-//            val datakomfirmasi = edt_konfirmasi.text.toString()
-//            val register = dbuser?.userDao()?.insertUser(DataUser(null, datnomor, datausername, dataEmail, datapassword, datakomfirmasi))
-//            activity?.runOnUiThread {
-//                if (register != 0.toLong()){
-//                    Toast.makeText(requireContext(), "Sukses", Toast.LENGTH_SHORT).show()
-//                }else{
-//                    Toast.makeText(requireContext(), "Gagal", Toast.LENGTH_SHORT).show()
-//                }
-//            }
-//        }
-//
-//    }
+    private fun saveData(){
+        dbuser = UserDatabase.getInstance(requireContext())
+        GlobalScope.async {
+            //get all data from edit text
+            val nm = edt_nomor.text.toString()
+            val user = edt_username.text.toString()
+            val em = edt_email.text.toString()
+            val pass = edt_password.text.toString()
+            val konf = edt_konfirmasi.text.toString()
 
-    private fun inputUserData(){
-        val datnomor = edt_nomor.text.toString()
-        val datausername = edt_username.text.toString()
-        val dataEmail = edt_email.text.toString()
-        val datapassword = edt_password.text.toString()
-        val datakomfirmasi = edt_konfirmasi.text.toString()
-
-        val sharedPreference = requireContext().getSharedPreferences("DATAUSER", Context.MODE_PRIVATE)
-        val pref = sharedPreference.edit()
-        pref.putString("NOMOR", datnomor)
-        pref.putString("USERNAME", datausername)
-        pref.putString("EMAIL", dataEmail)
-        pref.putString("PASSWORD", datapassword)
-        pref.putString("KONFIRMASI", datakomfirmasi)
-        pref.apply()
+            val proses = dbuser?.userDao()?.insertUser(DataUser(null, nm, user, em,pass, konf))
+            //cehck if command worked or not
+            activity?.runOnUiThread{
+                if(proses != 0.toLong()){
+                    Toast.makeText(requireContext(), "Proses register berhasil", Toast.LENGTH_SHORT).show()
+                }else{
+                    Toast.makeText(requireContext(), "Proses register gagal", Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
     }
 }
