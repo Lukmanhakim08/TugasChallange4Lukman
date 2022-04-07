@@ -67,7 +67,8 @@ class AdapterSekolah(private val listSekolah : List<Sekolah>) : RecyclerView.Ada
                 .setView(dialogcustemedit)
                 .create()
 
-            dialogcustemedit.edt_editsekolah.setText()
+            dialogcustemedit.edt_editsekolah.setText(listSekolah[position].sekolah)
+            dialogcustemedit.edt_editalamat.setText(listSekolah[position].alamat)
 
             // edit action button
             dialogcustemedit.btn_update.setOnClickListener {
