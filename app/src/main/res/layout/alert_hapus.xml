@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="HAPUS DATA"
+        android:textSize="28sp"
+        android:layout_marginVertical="20dp"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/texthapus"/>
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="hapus"
+        android:id="@+id/btnhapus"
+        android:layout_below="@+id/texthapus"
+        android:layout_marginStart="50dp"
+        android:layout_alignParentStart="true"/>
+
+    <Button
+        android:id="@+id/btnbatal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/texthapus"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="50dp"
+        android:text="batal" />
+</RelativeLayout>
