@@ -15,7 +15,7 @@
         android:layout_marginTop="10dp"/>
 
     <EditText
-        android:id="@+id/edit_sekolah"
+        android:id="@+id/edt_editsekolah"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
@@ -28,7 +28,7 @@
         android:background="@drawable/custom"/>
 
     <EditText
-        android:id="@+id/edit_alamat"
+        android:id="@+id/edt_editalamat"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"

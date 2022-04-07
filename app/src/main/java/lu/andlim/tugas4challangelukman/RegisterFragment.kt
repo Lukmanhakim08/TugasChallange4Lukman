@@ -8,9 +8,15 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.navigation.Navigation
+import kotlinx.android.synthetic.main.fragment_input_dialog.*
 import kotlinx.android.synthetic.main.fragment_register.*
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.async
+import lu.andlim.tugas4challangelukman.Datauser.DataUser
 
 class RegisterFragment : Fragment() {
+
+    private var dbuser : SekolahDatabase? = null
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -21,6 +27,7 @@ class RegisterFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        dbuser = SekolahDatabase.getInstance(requireContext())
         btn_register.setOnClickListener {
             if (edt_nomor.text.isNotEmpty() &&
                     edt_username.text.isNotEmpty() &&
@@ -40,6 +47,25 @@ class RegisterFragment : Fragment() {
             }
         }
     }
+
+//    private fun saveData(){
+//        GlobalScope.async {
+//            val datnomor = edt_nomor.text.toString()
+//            val datausername = edt_username.text.toString()
+//            val dataEmail = edt_email.text.toString()
+//            val datapassword = edt_password.text.toString()
+//            val datakomfirmasi = edt_konfirmasi.text.toString()
+//            val register = dbuser?.userDao()?.insertUser(DataUser(null, datnomor, datausername, dataEmail, datapassword, datakomfirmasi))
+//            activity?.runOnUiThread {
+//                if (register != 0.toLong()){
+//                    Toast.makeText(requireContext(), "Sukses", Toast.LENGTH_SHORT).show()
+//                }else{
+//                    Toast.makeText(requireContext(), "Gagal", Toast.LENGTH_SHORT).show()
+//                }
+//            }
+//        }
+//
+//    }
 
     private fun inputUserData(){
         val datnomor = edt_nomor.text.toString()

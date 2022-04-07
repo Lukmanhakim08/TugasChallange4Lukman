@@ -69,8 +69,8 @@ class AdapterSekolah(private val listSekolah : List<Sekolah>) : RecyclerView.Ada
 
             // edit action button
             dialogcustemedit.btn_update.setOnClickListener {
-                val newsekolah = dialogcustemedit.edit_sekolah.text.toString()
-                val newAlamat = dialogcustemedit.edit_alamat.text.toString()
+                val newsekolah = dialogcustemedit.edt_editsekolah.text.toString()
+                val newAlamat = dialogcustemedit.edt_editalamat.text.toString()
 
                 // memanggil ulang data daftar sekolah yang ada di posisi sekarang
                 listSekolah[position].sekolah = newsekolah
